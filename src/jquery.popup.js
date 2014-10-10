@@ -92,19 +92,33 @@
             if (param.padding) {
                 $content.css('padding', param.padding);
             }
+
             if (param.size) {
                 $el.addClass('popup-' + param.size);
             }
+
+            if (param.height) {
+                $content.height(param.height);
+            }
+
+            if(param.width){
+                $content.width(param.width);
+            }
+
             var width = param.width ? param.width : this.sizeMap[param.size];
-            var marginLeft = -(parseInt($content.css('padding-left'), 10) 
-            	+ parseInt($content.css('padding-right'), 10) 
-            	+ width)/2;
+            var marginLeft = -(parseInt($content.css('padding-left'), 10) + parseInt($content.css('padding-right'), 10) + width) / 2;
             $content.css('margin-left', marginLeft);
             if (param.background) {
                 $content.css('background', param.background);
             }
         },
         show: function() {
+            if (!-[1, ] && !window.XMLHttpRequest) { // 判断浏览器是否ie6
+                this.$el.css('top', $doc.scrollTop())
+                    .height($doc.height());
+                this.$mask.css('top', $doc.scrollTop())
+                    .height($doc.height());
+            }
             this.$el.show();
             this.$mask.show();
             this.$el.addClass('popup-in');
@@ -121,21 +135,23 @@
             $(document).off('DOMMouseScroll');
         },
         shouldHide: function(elem) {
-            var $elem = $(elem);
-            var shouldHide = true;
-            var $current = $elem.closest('.popup-wrap');
-            var shouldHide = true;
+            //   var $elem = $(elem);
+            //   var $current = $elem.closest('.popup-wrap');
+            //   var shouldHide = true;
 
-            for (var i = 0; i <= triggerElemArr.length; i++) {
-                if (elem === triggerElemArr[i]) {
-                    shouldHide = false;
-                }
-            };
+            //   for (var i = 0; i <= triggerElemArr.length; i++) {
+            //       if (elem === triggerElemArr[i]) {
+            //           shouldHide = false;
+            //       }
+            //   };
 
-            if (elem !== this.$el[0]) {
-                shouldHide = false;
-            }
-            return shouldHide;
+            //   if (elem !== this.$el[0]) {
+            // alert(this.$el.html().splice(0. 15);
+            // alert(this.$el.html().splice(0. 15);
+            //       shouldHide = false;
+            //   }
+            // $(elem).attr('class') && alert($(elem).attr('class'));
+            return $(elem).hasClass('popup-wrap');
         }
     });
 

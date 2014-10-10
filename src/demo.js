@@ -4,4 +4,12 @@ $(document).ready(function () {
 	    size: 'middle',
 	    background: '#fff'
 	});
+
+
+	$('<div>abcdefghijk</div>').popup({
+		trigger: $('#popup-btn2'),
+	    width: 200,
+	    height: 200,
+	    background: '#fff'
+	});
 })
