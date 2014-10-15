@@ -1,11 +1,19 @@
 (function($) {
+    // 动画效果
+    $.extend($.easing, {
+        easeOutQuad: function(x, t, b, c, d) {
+            return -c * (t /= d) * (t - 2) + b;
+        }
+    });
     var defaultParam = {
         clickOutsideHide: true,
         trigger: false,
         width: false,
         size: false, //'large' 900  'middle' 600  'small' 300
         background: false,
-        padding: '20px'
+        padding: '20px',
+        animate: true,
+        duration: 800
     };
     var popId = 1;
     var triggerElemArr = []; // 触发让弹出框弹出的元素
@@ -101,7 +109,7 @@
                 $content.height(param.height);
             }
 
-            if(param.width){
+            if (param.width) {
                 $content.width(param.width);
             }
 
@@ -113,21 +121,37 @@
             }
         },
         show: function() {
+            var self = this;
             if (!-[1, ] && !window.XMLHttpRequest) { // 判断浏览器是否ie6
                 this.$el.css('top', $doc.scrollTop())
                     .height($doc.height());
                 this.$mask.css('top', $doc.scrollTop())
                     .height($doc.height());
             }
+            var $popupContent = this.$el.find('.popup-content');
+            $popupContent.css({
+                top: -$popupContent.height()
+            });
             this.$el.show();
+            if (this.param.animate) {
+                $popupContent.animate({
+                    top: this.$el.height() * 0.2
+                }, {
+                    duration: this.param['duration'],
+                    easing: 'easeOutQuad'
+                });
+            } else {
+                $popupContent.css({
+                    top: this.$el.height() * 0.2
+                });
+            }
+            // return;
             this.$mask.show();
-            this.$el.addClass('popup-in');
             $('body, html').css('overflow-y', 'hidden');
             $(document).on('mousewheel', preventScroll); // 非火狐
             $(document).on('DOMMouseScroll', preventScroll); // firefox
         },
         hide: function() {
-            this.$el.removeClass('popup-in');
             this.$el.hide();
             this.$mask.hide();
             $('body, html').css('overflow-y', '');

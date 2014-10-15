@@ -44,24 +44,4 @@
 	width: 300px;
 	margin-left: -150px;
 }
-.popup-fade {
-	opacity: 0;
-	-webkit-transition: opacity 0.3s linear 0s;
-	        transition: opacity 0.3s linear 0s;
-}
-.popup-fade .popup-content{
-	top:0;
-	-webkit-transition: top .3s ease-out;
-	        transition: top .3s ease-out;
-}
-.popup-in {
-	opacity: 1;
-	-webkit-transition: opacity 0.3s linear 0s;
-	        transition: opacity 0.3s linear 0s;
-}
-.popup-in .popup-content{
-	top:25%;
-	_top: 100px;
-	-webkit-transition: top .3s ease-out;
-	        transition: top .3s ease-out;
-}
+

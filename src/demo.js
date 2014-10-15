@@ -10,6 +10,7 @@ $(document).ready(function () {
 		trigger: $('#popup-btn2'),
 	    width: 200,
 	    height: 200,
-	    background: '#fff'
+	    background: '#fff',
+	    animate: false
 	});
 })
