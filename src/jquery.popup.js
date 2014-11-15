@@ -22,10 +22,12 @@
         popup: '<div  id="popup-{id}" class="popup-wrap popup-fade" style="display:none;">' + '<div class="popup-content">' + '</div>' + '</div>'
     };
 
-    var $doc = $(document);
-    var $body = $('body');
+    var $doc;
+    var $body;
 
     function Popup($popup, param) {
+        $doc = $(document);
+        $body = $('body');
         var self = this;
         this.param = $.extend({}, defaultParam, param);
         param = this.param;
@@ -180,6 +182,6 @@
     });
 
     $.fn.popup = function(param) {
-        new Popup(this, param);
+        return new Popup(this, param);
     }
 })(jQuery);
