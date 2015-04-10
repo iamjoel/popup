@@ -16,7 +16,6 @@
         duration: 800
     };
     var popId = 1;
-    var triggerElemArr = []; // 触发让弹出框弹出的元素
     var template = {
         mask: '<div class="popup-mask" style="display:none;"></div>',
         popup: '<div  id="popup-{id}" class="popup-wrap popup-fade" style="display:none;">' + '<div class="popup-content">' + '</div>' + '</div>'
@@ -43,12 +42,12 @@
         this.$el = $(template.popup.replace('{id}', popId++));
         $body.append(this.$el);
 
+
         this.initView($popup); //外观
 
         $triggerElem = $(param.trigger);
-        $triggerElem.each(function() {
-            triggerElemArr.push(this);
-        })
+        $triggerElem.addClass('trigger-popup-btn')
+
 
         $triggerElem.click(function() {
             self.show();
@@ -61,6 +60,8 @@
                     self.hide();
                 }
             });
+        } else {
+            this.$el.addClass('click-outside-not-hide');
         }
     }
 
@@ -161,23 +162,19 @@
             $(document).off('DOMMouseScroll');
         },
         shouldHide: function(elem) {
-            //   var $elem = $(elem);
-            //   var $current = $elem.closest('.popup-wrap');
-            //   var shouldHide = true;
+            var $visibleWrap = $('.popup-wrap:visible');
+            // 强制不关闭
+            if($visibleWrap.hasClass('click-outside-not-hide')){
+                return false;
+            }
+            // 点弹出框内部，则不关闭
+            var toHide = false;
+            var $wrap = $(elem).closest('.popup-content');
+            if($wrap.length === 0 && !$(elem).hasClass('trigger-popup-btn')){
+                toHide = true;
+            }
 
-            //   for (var i = 0; i <= triggerElemArr.length; i++) {
-            //       if (elem === triggerElemArr[i]) {
-            //           shouldHide = false;
-            //       }
-            //   };
-
-            //   if (elem !== this.$el[0]) {
-            // alert(this.$el.html().splice(0. 15);
-            // alert(this.$el.html().splice(0. 15);
-            //       shouldHide = false;
-            //   }
-            // $(elem).attr('class') && alert($(elem).attr('class'));
-            return $(elem).hasClass('popup-wrap');
+            return toHide;
         }
     });
 
