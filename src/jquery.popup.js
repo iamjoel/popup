@@ -109,14 +109,17 @@
             }
 
             if (param.height) {
-                $content.height(param.height);
+                $content.css('height', param.height + (param.unit ? param.unit : 'px'));
             }
 
             if (param.width) {
-                $content.width(param.width);
+                $content.css('width', param.width + (param.unit ? param.unit : 'px'));
             }
 
             var width = param.width ? param.width : this.sizeMap[param.size];
+            if(param.unit === 'rem'){
+                width = width * parseFloat($('html').css('font-size').replace('px', '')); // 转化成px的宽度
+            }
             var marginLeft = -(parseInt($content.css('padding-left'), 10) + parseInt($content.css('padding-right'), 10) + width) / 2;
             $content.css('margin-left', marginLeft);
             if (param.background) {
